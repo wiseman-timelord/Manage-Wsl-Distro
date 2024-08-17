@@ -6,4 +6,4 @@ A neccessary script, to install a specific Ubuntu iso into WSL/WSL2.
 2. IT will be, by default and to start with, the 24.04 LTS, with the user intended to perform a quick hack of the script to change the iso chosen to be installed.
 
 ### MOTIVATION:
-3. The purpose of the project, is to be then able to use wsl2 for amdgpu or at least the libraries, that interest relates to stable diffusion webui performance.
+- The purpose of the project, is to be then able to use wsl2 for amdgpu or at least the libraries, that interest relates to stable diffusion webui performance.
