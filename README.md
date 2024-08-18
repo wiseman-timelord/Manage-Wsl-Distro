@@ -1,4 +1,4 @@
-# WinStaLLUrBunToo (Windows WSL Install Your-Iso Ubuntu).
+# WinStaLLUrBunToo (Windows WSL Install Your-Iso To Ubuntu).
 A neccessary script, to install a specific Ubuntu iso into WSL/WSL2.
 
 ### PLANNER:
