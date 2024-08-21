@@ -1,4 +1,4 @@
-# WinsAllUrBunsToo (Windows Install Ubuntu To WSL2).
+# WinAllUrBunsToo (Windows Install Ubuntu To WSL2).
 A tool for offline installing Ubuntu to Windows Subsystem Linux 2.
 
 ### PLANNER:
