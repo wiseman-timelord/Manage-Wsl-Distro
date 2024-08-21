@@ -11,7 +11,7 @@ F:\System\O.S\Linux\install_wel2_ubuntu.ps1 : No squashfs image found.
 ```
 
 ### DESCRIPTION:
-Its early works, but the idea is, its possible to install ISOs offline without using the Ms Store, I'd rather do that with the ISOs I already downloaded. You would think this would be as simple as installing other microsoft packages offline with a little command, but NOOOOOOOOOOOOOOO. The purpose of the project, is to be then able to use wsl2 for non-ROCM AMD torch compatibility, as I have done before but used the store to install, that doesnt seem to work at some point after you mod Windows 10 OS, when I had a fresh install, through so many customizations that you just dont go back.
+Its early works, but the idea is, its possible to install ISOs offline without using the Ms Store, I'd rather do that with the ISOs I already downloaded. You would think this would be as simple as installing other microsoft packages offline with a little command, but NOOOOOOOOOOOOOOO. The main reasoning for requiring WSL2 on windows is Torch compatibility for apps that require it, this would include, image, movie, audio, generation, as Quantized LLMs doesnt really exist for that kind of thing. The MS Store just doesnt seem to work at some point after deep edits of Windows 10 OS, meaning if you are going to use WSL2, you generally need to install the Ubuntu ISO of choice, somewhat early on, or install offline one is hoping.
 
 ### OUTPUT:
 - Early Version demonstration...
