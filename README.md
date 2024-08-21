@@ -1,5 +1,5 @@
 # WinStaLLUrBunToo (Windows WSL Install Your-Iso To Ubuntu).
-Installer for offling Ubuntu iso into Windows Subsystem Linux 2.
+Installer for offline installing Ubuntu iso into Windows Subsystem Linux 2.
 
 ### PLANNER:
 1. It will detect the isos present in specified folder, possibly .\models (but for now same folder as script). 
