@@ -1,4 +1,4 @@
-# WinStaLLUrBunToo (Windows WSL Install Your-Iso To Ubuntu).
+# WinStallUrBunToo (Windows WSL Install Your-Iso To Ubuntu).
 A tool for offline installing Ubuntu iso into Windows Subsystem Linux 2.
 
 ### PLANNER:
