@@ -2,9 +2,7 @@
 A tool for offline installing Ubuntu to Windows Subsystem Linux 2.
 
 ### PLANNER:
-1. It will detect the isos present in specified folder, possibly .\models (but for now same folder as script). 
-2. Menus to choose which iso, and then extract to ".\temp", this should involve cleaning of this folder upon start. 
-3. Current Error...
+1. Current Error...
 ```
 F:\System\O.S\Linux\install_wel2_ubuntu.ps1 : No squashfs image found.
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -12,8 +10,8 @@ F:\System\O.S\Linux\install_wel2_ubuntu.ps1 : No squashfs image found.
 
 ```
 
-### MOTIVATION:
-- The purpose of the project, is to be then able to use wsl2 for amdgpu or at least the libraries, that interest relates to stable diffusion webui performance.
+### DESCRIPTION:
+Its early works, but the idea is, its possible to install isos offline without using the Ms Store, I'd rather do that with the ISOs I already downloaded. You would think this would be as simple as installing other microsoft packages offline with a little command, but NOOOOOOOOOOOOOOO. The purpose of the project, is to be then able to use wsl2 for AMD with torch compatibility.
 
 ### OUTPUT:
 - Early Version demonstration...
