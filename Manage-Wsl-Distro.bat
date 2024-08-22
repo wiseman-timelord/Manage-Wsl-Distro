@@ -18,7 +18,7 @@ echo Working Dir: "%working_directory_location%"
 
 :: Call the PowerShell script...
 echo Executing PowerShell 7 Script...
-powershell -ExecutionPolicy Bypass -NoProfile -File "install_wel2_ubuntu.ps1"
+powershell -ExecutionPolicy Bypass -NoProfile -File "manage-wsl-distro.ps1"
 echo PowerShell 7 Script Exited.
 
 ::: End of Script.
