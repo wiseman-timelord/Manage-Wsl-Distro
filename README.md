@@ -34,7 +34,7 @@ curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004
 ```
 Add-AppxPackage .\app_name.appx
 ```
-...hence, no need to list the isos and present them as options, and do complicated 7z tasks. The appx files should be collected in ".\Cache", and re-used if the user were to select to install them again.
+...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and re-used if the user were to select to install them again.
 
 X. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
 ```
