@@ -24,9 +24,10 @@ Select; Menu Options = 1-2, Exit Program = X:
 - Option 2 on the menu, would then have the effect of asking the user which distribution to uninstall, without a re-draw, because it has already listed the distros with their relating numbers. It would of course need to capture the text "Ubuntu-24.04-LTS" somehow. I think this "wsl --list --verbose" command would be better, because you know the name of the model would be the first chunk of text in each line after the first line, and it doesnt have the text (default).
 2. Its possible to download any model we want without the store messing things up...
 ```
+Example for Ubuntu 24.04...
 Invoke-WebRequest -Uri https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2404-240425.AppxBundle -OutFile Ubuntu2404.appx -UseBasicParsing
 
-Distribution options:
+Distribution options we should include:
 Ubuntu Latest - https://aka.ms/wslubuntu
 Ubuntu 24.04 - https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2404-240425.AppxBundle
 Ubuntu 22.04 - https://aka.ms/wslubuntu2204
@@ -36,7 +37,7 @@ Ubuntu 20.04 - https://aka.ms/wslubuntu2004
 ```
 Add-AppxPackage .\app_name.appx
 ```
-...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and re-used if the user were to select to install them again.
+...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and, be checked before the web-request and re-used if present, if the user were to select to install them again.
 
 X. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
 ```
