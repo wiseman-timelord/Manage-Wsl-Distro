@@ -67,7 +67,9 @@ Select option (1-3), X=Exit:
 - TBA.
 
 ### NOTATION:
-- It could potentially do all of this on the re-visit `https://learn.microsoft.com/en-us/windows/wsl/basic-commands`, and with an interface become a quality tool for WSL users.
+- It could potentially do all of this `https://learn.microsoft.com/en-us/windows/wsl/basic-commands`.
+- It Could have some description of GUI, or interface improvement such as arrow controls.
+- Delays could be improved, but keeping things slow is probably a good idea, to save on human error.
 
 ## DISCLAIMER
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
