@@ -4,7 +4,10 @@ Status: Alpha; it has already worked, but the overall usefulness of the program 
 ### PLANNER:
 1. Test.
 2. Fix remaining issues.
-3. Test installed distro.
+3. Install a distro, remove a distro.
+4. Test an installed distro.
+5. Test any remaining features.
+6. Go back to other PROJECTS.
 
 ### DESCRIPTION:
 A tool for offline, listing, installing, removing, Ubuntu installs in WSL. Its early works, but the idea is, its possible to manage installs of Ubuntu ISOs for WSL, while, being offline and without using the Ms Store. This can be extremely useful..
