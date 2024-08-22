@@ -32,7 +32,7 @@ Running
 wsl --list
  will reveal that it is no longer listed.
 ```
-...to confirm the relevant distribution is removed. Or if it fails with an error, then it should report the error.
+...to confirm the relevant distribution is removed. Or if it fails with an error, then it should report the error to the user, and then return to main menu.
 
 2. Fix any remaining issues.
 3. Install a distro, remove a distro.
