@@ -1,5 +1,5 @@
 # Manage-WSL-Distro
-Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken. Its so tedious, and getting in the way of other projects, it may have to go on hold.
+Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken. Its so tedious, and getting in the way of other projects, it may have to go on hold, or I will forget what I was actually trying to do.
 
 ### PLANNER:
 1. Issue: Instead of option 1, we should "List-WSLDistros" and display the current distro installs above the options on the menu, like...
