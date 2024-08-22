@@ -2,8 +2,39 @@
 Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added.
 
 ### PLANNER:
-1. Test.
-2. Fix remaining issues.
+1. Testing and Fixing - Option 1 works.
+2. Issue: When Selecting option 3 to remove a distro, it cant find any distros...
+```
+No Ubuntu distros found.
+```
+...However, it is able to find distros when I use option 1 to list the currently installed distros. In option 1 I want it to be verbose, but option 3 will should use a simpler command, and expect different response detailing what models are installed, example output...
+```
+C:\Users\Mastar>wsl --list
+Windows Subsystem for Linux Distributions:
+Ubuntu-24.04-LTS (Default)
+```
+...this should then result in script offering these as options to remove, and then when the user selects a distributin to remove, we should firstmake sure its not running... 
+```
+wsl --terminate <Distribution Name>
+```
+...and then remove it...
+```
+To unregister and uninstall a WSL distribution:
+PowerShell
+
+wsl --unregister <DistributionName>
+
+Replacing <DistributionName> with the name of your targeted Linux distribution will unregister that distribution from WSL so it can be reinstalled or cleaned up. Caution: Once unregistered, all data, settings, and software associated with that distribution will be permanently lost. Reinstalling from the store will install a clean copy of the distribution. For example, wsl --unregister Ubuntu would remove Ubuntu from the distributions available in WSL. 
+```
+...and then if success, then run...
+```
+Running 
+wsl --list
+ will reveal that it is no longer listed.
+```
+...to confirm the relevant distribution is removed. Or if it fails with an error, then it should report the error.
+
+2. Fix any remaining issues.
 3. Install a distro, remove a distro.
 4. Test an installed distro.
 5. Test any remaining features.
