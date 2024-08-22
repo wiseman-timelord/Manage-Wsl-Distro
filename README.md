@@ -26,9 +26,7 @@ Select; Menu Options = 1-2, Exit Program = X:
 ```
 curl.exe -L -o ubuntu-2404.appx https://aka.ms/wslubuntu2404
 or
-curl.exe -L -o ubuntu-2204.appx https://aka.ms/wslubuntu2204
-or 
-curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004
+Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBasicParsing
 ```
 ...these should be the pre-set options,  but we should also not include options in the list, that are already installed. They will need to remove it first before they are allowed to install again. Either way, after downloading the appx then use the command, for example...
 ```
