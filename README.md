@@ -69,7 +69,7 @@ Select option (1-3), X=Exit:
 ### NOTATION:
 - It could potentially do all of this `https://learn.microsoft.com/en-us/windows/wsl/basic-commands`.
 - It Could have some description of GUI, or interface improvement such as arrow controls.
-- Delays could be improved, but keeping things slow and simple is probably a good idea, to save on human error and characters used.
+- Delays could be improved, but keeping things slow and simple is probably a good idea, to save on human error and characters used during development.
 
 ## DISCLAIMER
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
