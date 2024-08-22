@@ -37,7 +37,7 @@ Ubuntu 20.04 - https://aka.ms/wslubuntu2004
 ```
 Add-AppxPackage .\app_name.appx
 ```
-...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and, be checked before the web-request and re-used if present, if the user were to select to install them again.
+...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and, be checked before the web-request and re-used if present, if the user were to select to install them again. The Appx for 2404 is 600MB while the iso is 6GB, its clearly the better option to use the Appx.
 
 X. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
 ```
