@@ -24,9 +24,13 @@ Select; Menu Options = 1-2, Exit Program = X:
 - Option 2 on the menu, would then have the effect of asking the user which distribution to uninstall, without a re-draw, because it has already listed the distros with their relating numbers. It would of course need to capture the text "Ubuntu-24.04-LTS" somehow. I think this "wsl --list --verbose" command would be better, because you know the name of the model would be the first chunk of text in each line after the first line, and it doesnt have the text (default).
 2. Its possible to download any model we want without the store messing things up...
 ```
-curl.exe -L -o ubuntu-2404.appx https://aka.ms/wslubuntu2404
-or
-Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBasicParsing
+Invoke-WebRequest -Uri https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2404-240425.AppxBundle -OutFile Ubuntu2404.appx -UseBasicParsing
+
+Distribution options:
+Ubuntu Latest - https://aka.ms/wslubuntu
+Ubuntu 24.04 - https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2404-240425.AppxBundle
+Ubuntu 22.04 - https://aka.ms/wslubuntu2204
+Ubuntu 20.04 - https://aka.ms/wslubuntu2004
 ```
 ...these should be the pre-set options,  but we should also not include options in the list, that are already installed. They will need to remove it first before they are allowed to install again. Either way, after downloading the appx then use the command, for example...
 ```
