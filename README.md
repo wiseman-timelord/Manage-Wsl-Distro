@@ -20,12 +20,15 @@ A tool for offline, listing, installing, removing, Ubuntu installs in WSL. Its e
 ### OUTPUT:
 - The current main menu, you get the idea...
 ```
-=========================================================
-Wsl Distro Manager
----------------------------------------------------------
-1. List installed distros
-2. Install Ubuntu distro
-3. Remove Ubuntu distro
----------------------------------------------------------
-Select; Menu Options = 1-3, Exit Program = X:
+========================================================================================================================
+WSL Distro Manager
+------------------------------------------------------------------------------------------------------------------------
+
+1. List Installed Ubuntus
+2. Install Ubuntu Distro
+3. Remove Ubuntu Distro
+
+------------------------------------------------------------------------------------------------------------------------
+Select option (1-3), X=Exit:
+
 ```
