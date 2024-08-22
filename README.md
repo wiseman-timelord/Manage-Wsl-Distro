@@ -1,4 +1,4 @@
-# Manage-WSL-Distro.
+# Manage-WSL-Distro
 Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken.
 
 ### PLANNER:
