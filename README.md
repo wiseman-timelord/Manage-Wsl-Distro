@@ -63,5 +63,11 @@ Select option (1-3), X=Exit:
 
 ```
 
+## INSALL AND USAGE:
+- TBA.
+
+### NOTATION:
+- It could potentially do all of this on the re-visit `https://learn.microsoft.com/en-us/windows/wsl/basic-commands`, and with an interface become a quality tool for WSL users.
+
 ## DISCLAIMER
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
