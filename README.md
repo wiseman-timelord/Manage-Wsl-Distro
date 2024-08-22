@@ -22,8 +22,21 @@ Select; Menu Options = 1-2, Exit Program = X:
 ...where...
 - the text for the menu items and distros and title has been centered through padding, remember there are 120 characters width.
 - Option 2 on the menu, would then have the effect of asking the user which distribution to uninstall, without a re-draw, because it has already listed the distros with their relating numbers. It would of course need to capture the text "Ubuntu-24.04-LTS" somehow. I think this "wsl --list --verbose" command would be better, because you know the name of the model would be the first chunk of text in each line after the first line, and it doesnt have the text (default).
+2. Its possible to download any model we want without the store messing things up...
+```
+curl.exe -L -o ubuntu-2404.appx https://aka.ms/wslubuntu2404
+or
+curl.exe -L -o ubuntu-2204.appx https://aka.ms/wslubuntu2204
+or 
+curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004
+```
+...these should be the pre-set options,  but we should also not include options in the list, that are already installed. They will need to remove it first before they are allowed to install again. Either way, after downloading the appx then use the command, for example...
+```
+Add-AppxPackage .\app_name.appx
+```
+...hence, no need to list the isos and present them as options, and do complicated 7z tasks. The appx files should be collected in ".\Cache", and re-used if the user were to select to install them again.
 
-2. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
+X. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
 ```
 No Ubuntu distros found.
 ```
