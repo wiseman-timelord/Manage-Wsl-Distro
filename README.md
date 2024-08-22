@@ -2,8 +2,28 @@
 Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken.
 
 ### PLANNER:
-1. Testing and Fixing - Option 1 works.
-2. Issue: When Selecting option 3 to remove a distro, it cant find any distros...
+1. Issue: Instead of option 1, we should "List-WSLDistros" and display the current distro installs above the options on the menu, like...
+```
+========================================================================================================================
+                                                    WSL Distro Manager
+------------------------------------------------------------------------------------------------------------------------
+
+                                          NAME                STATE           VERSION
+                                       1) Ubuntu-24.04-LTS    Stopped         2
+
+------------------------------------------------------------------------------------------------------------------------
+
+                                                1. Install Ubuntu Distro
+                                                2. Remove Ubuntu Distro
+
+========================================================================================================================
+Select; Menu Options = 1-2, Exit Program = X:
+```
+...where...
+- the text for the menu items and distros and title has been centered through padding, remember there are 120 characters width.
+- Option 2 on the menu, would then have the effect of asking the user which distribution to uninstall, without a re-draw, because it has already listed the distros with their relating numbers. It would of course need to capture the text "Ubuntu-24.04-LTS" somehow. I think this "wsl --list --verbose" command would be better, because you know the name of the model would be the first chunk of text in each line after the first line, and it doesnt have the text (default).
+
+2. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
 ```
 No Ubuntu distros found.
 ```
