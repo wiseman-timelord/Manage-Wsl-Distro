@@ -2,13 +2,9 @@
 Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added.
 
 ### PLANNER:
-1. Current Error...
-```
-F:\System\O.S\Linux\install_wel2_ubuntu.ps1 : No squashfs image found.
-    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
-    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,install_wel2_ubuntu.ps1
-
-```
+1. Test.
+2. Fix remaining issues.
+3. Test installed distro.
 
 ### DESCRIPTION:
 A tool for offline, listing, installing, removing, Ubuntu installs in WSL. Its early works, but the idea is, its possible to manage installs of Ubuntu ISOs for WSL, while, being offline and without using the Ms Store. This can be extremely useful..
