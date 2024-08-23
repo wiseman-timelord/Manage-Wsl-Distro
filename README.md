@@ -1,5 +1,5 @@
 # Manage-WSL-Distro
-Status: Alpha; Things are broken, its became tedious trying to get GPT and claude to correctly split output from "wsl --list", through entire sessions and not getting it right, and getting in the way of other projects, this project is on hold. I figured out the best method of how to install ubuntu, and must now attend to more important matters. Its all there below, just needs finishing.
+Status: Alpha; Things are broken, its became tedious trying to get GPT and claude to correctly split output from "wsl --list", through entire sessions and not getting it right, and getting in the way of other projects, this project is on hold. I figured out the best method of how to install ubuntu, and must now attend to more important matters. Its all there below, just needs finishing. Definately will be taking a look at it when 26.04 comes out, if not before.
 
 ### PLANNER:
 1. Issue: Instead of option 1, we should "List-WSLDistros" and display the current distro installs above the options on the menu, like...
