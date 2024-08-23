@@ -1,5 +1,5 @@
 # Manage-WSL-Distro
-Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken. Its so tedious, and getting in the way of other projects, it may have to go on hold, or I will forget what I was actually trying to do.
+Status: Alpha; it has already worked, but the overall usefulness of the program is being reviewed and logical supporting features added, while thats going on things are broken. Its tedious, I am stuck in trying to get GPT and claude to correctly split output from "wsl --list", through entire sessions, and getting in the way of other projects, this project is on hold, as I figured out how to install ubuntu, and must now attend to more important matters. Its all there below, just needs finishing.
 
 ### PLANNER:
 1. Issue: Instead of option 1, we should "List-WSLDistros" and display the current distro installs above the options on the menu, like...
@@ -38,43 +38,12 @@ Ubuntu 20.04 - https://aka.ms/wslubuntu2004
 Add-AppxPackage .\app_name.appx
 ```
 ...hence, we would be somewhat replacing "1. Install Ubuntu Distro" on the menu, as need to list the iso files and present them as options, and do complicated 7z tasks. The appx files should be, downloaded/collected in ".\Cache", and, be checked before the web-request and re-used if present, if the user were to select to install them again. The Appx for 2404 is 600MB while the iso is 6GB, its clearly the better option to use the Appx.
-
-X. (Needs re-assessment after above) When Selecting option 3 to remove a distro, it cant find any distros...
-```
-No Ubuntu distros found.
-```
-...However, it is able to find distros when I use option 1 to list the currently installed distros. In option 1 I want it to be verbose, but option 3 will should use a simpler command, and expect different response detailing what models are installed, example output...
-```
-C:\Users\Mastar>wsl --list
-Windows Subsystem for Linux Distributions:
-Ubuntu-24.04-LTS (Default)
-```
-...this should then result in script offering these as options to remove, and then when the user selects a distributin to remove, we should firstmake sure its not running... 
-```
-wsl --terminate <Distribution Name>
-```
-...and then remove it...
-```
-To unregister and uninstall a WSL distribution:
-PowerShell
-
-wsl --unregister <DistributionName>
-
-Replacing <DistributionName> with the name of your targeted Linux distribution will unregister that distribution from WSL so it can be reinstalled or cleaned up. Caution: Once unregistered, all data, settings, and software associated with that distribution will be permanently lost. Reinstalling from the store will install a clean copy of the distribution. For example, wsl --unregister Ubuntu would remove Ubuntu from the distributions available in WSL. 
-```
-...and then if success, then run...
-```
-Running 
-wsl --list
- will reveal that it is no longer listed.
-```
-...to confirm the relevant distribution is removed. Or if it fails with an error, then it should report the error to the user, and then return to main menu.
-
-2. Fix any remaining issues.
-3. Install a distro, remove a distro.
-4. Test an installed distro.
-5. Test any remaining features.
-6. Go back to other PROJECTS.
+3. The safest method is to rename the appx to a zip, then extract the files to .\extracted, then run ".\extracted\ubuntu.exe" 
+4. Fix any remaining issues.
+5. Install a distro, remove a distro.
+6. Test an installed distro.
+7. Test any remaining features.
+8. Go back to other PROJECTS.
 
 ### DESCRIPTION:
 A tool for offline, listing, installing, removing, Ubuntu installs in WSL. Its early works, but the idea is, its possible to manage installs of Ubuntu ISOs for WSL, while, being offline and without using the Ms Store. You would think this would be as simple as installing other microsoft packages offline with a little command, but NO. This can be extremely useful..
