@@ -18,7 +18,7 @@ A tool for offline, listing, installing, removing, Ubuntu installs in WSL. Its e
 - The current main menu, you get the idea...
 ```
 ========================================================================================================================
-    Manager-Wsl-Distro
+    Manage-Wsl-Distro
 ------------------------------------------------------------------------------------------------------------------------
 
     1. List Installed Ubuntus
