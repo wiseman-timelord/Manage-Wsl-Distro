@@ -1,5 +1,5 @@
 # Manage-WSL-Distro
-Status: Alpha. Progress is slow.
+Status: Alpha. Progress is slow. Each time it starts taking too long, I will give up and just use manual method, useually I am in middle of something else.
 
 ### PLANNER:
 1. Fix any remaining issues.
