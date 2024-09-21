@@ -21,23 +21,22 @@ function Write-Log {
 
 # Banner function
 function Show-Banner {
-    Clear-Host
-    $banner = "=" * 120
-    Write-Host $banner
-    Write-Host "WSL Distro Manager"
-    Write-Host $banner
+    # Clear-Host
+    Write-Host ("=" * 120)
+    Write-Host "   Manage-Wsl-Distro"
+    Write-Host ("=" * 120)
     Write-Host "" # Extra line for spacing
 }
 
 # Main menu function
 function Show-MainMenu {
     Show-Banner
-    # Printing menu options individually
-    Write-Host "1. List Installed Ubuntus"
-    Write-Host "2. Install Ubuntu Distro"
-    Write-Host "3. Remove Ubuntu Distro"
-    Write-Host "" # Add a blank line before the prompt for better readability
-
+    Write-Host "`n`n`n`n`n`n`n"
+    Write-Host "    1. List Installed Ubuntus`n"
+    Write-Host "    2. Install Ubuntu Distro`n"
+    Write-Host "    3. Remove Ubuntu Distro"
+    Write-Host "`n`n`n`n`n`n`n`n"
+    Write-Host ("=" * 120)
     # Prompt user for input
     $menuChoice = Read-Host "Select option (1-3), X=Exit"
 
@@ -80,7 +79,9 @@ function Handle-UserChoice {
 # WSL functions
 function List-WSLDistros {
     Show-Banner
-    Write-Host "Installed WSL Distros:"
+    write-host ("Listing and Displaying, Distros...`n")
+	
+	Write-Host "    Installed WSL Distros:"
     try {
         $wslList = wsl --list --verbose
         if ($wslList) {
@@ -92,12 +93,53 @@ function List-WSLDistros {
     catch {
         Write-Log "Error listing WSL distros: $_" -Level "ERROR"
     }
-    Read-Host "Press Enter to return to the main menu..."
+    Read-Host "Press Enter to return to Main Menu..."
 }
 
 function Install-UbuntuDistro {
     Show-Banner
-    $wslDistroName = "CustomUbuntu-24.04-LTS"
+    Write-Host "Install Distro Started..."
+    
+    # Prompt user for the folder containing ISO files
+    $isoFolderPath = Read-Host "Please Input Full-Path Ubuntu ISOs Folder"
+
+    if (-not (Test-Path $isoFolderPath)) {
+        Wait-WithMessage "Invalid folder path. Please make sure the folder exists." 3
+        return
+    }
+
+    # Find ISO files in the provided folder
+    $isoFiles = Get-ChildItem $isoFolderPath -Filter "ubuntu*.iso" -ErrorAction SilentlyContinue
+    if ($isoFiles.Count -eq 0) {
+        Wait-WithMessage "No ISO files found matching 'ubuntu*.iso' in the specified folder." 3
+        return
+    }
+
+    # List available ISO files
+    Write-Host "`nAvailable ISO files:`n"
+    for ($i = 0; $i -lt $isoFiles.Count; $i++) {
+        Write-Host "    $($i + 1). $($isoFiles[$i].Name)"
+    }
+
+    # Prompt user to select the ISO
+    do {
+        $selectedIndex = Read-Host "`nSelection; ISO Options (1-$($isoFiles.Count)), Back to Menu = B"
+        if ($selectedIndex -match '^[Bb]$') {
+            return
+        }
+    } while (-not ($selectedIndex -match '^[0-9]+$' -and [int]$selectedIndex -ge 1 -and [int]$selectedIndex -le $isoFiles.Count))
+
+    $selectedIso = $isoFiles[[int]$selectedIndex - 1]
+
+    # Extract distro name from the ISO file name
+    $isoNameParts = $selectedIso.BaseName.Split("-")
+    if ($isoNameParts.Count -ge 3) {
+        $wslDistroName = "$($isoNameParts[0])-$($isoNameParts[1]).$($isoNameParts[2])"
+    } else {
+        $wslDistroName = $selectedIso.BaseName
+    }
+
+    Write-Host "`nInstalling WSL Distro as '$wslDistroName' using $($selectedIso.Name)..."
 
     # Prepare extraction directory
     try {
@@ -106,82 +148,127 @@ function Install-UbuntuDistro {
         } else {
             Get-ChildItem $Config.ExtractDir | Remove-Item -Force -Recurse
         }
-        Wait-WithMessage "Directory prepared." 1
+        Write-Log "Extraction directory prepared: $($Config.ExtractDir)" -Level "INFO"
     }
     catch {
         Write-Log "Error preparing extraction directory: $_" -Level "ERROR"
         return
     }
 
-    # Find and select ISO
-    $isoFiles = Get-ChildItem $Config.ScriptDir -Filter "*ubuntu*.iso"
-    if ($isoFiles.Count -eq 0) {
-        Wait-WithMessage "No ISO found." 3
-        return
-    }
-
-    # Printing each ISO option
-    Write-Host "Available ISO files:"
-    for ($i = 0; $i -lt $isoFiles.Count; $i++) {
-        Write-Host "$($i + 1). $($isoFiles[$i].Name)"
-    }
-
-    # Prompt user for selection
-    do {
-        $selectedIndex = Read-Host "Select ISO (1-$($isoFiles.Count)), X=Exit"
-        if ($selectedIndex -match '^[Xx]$') {
-            return
-        }
-    } while (-not ($selectedIndex -match '^[0-9]+$' -and [int]$selectedIndex -ge 1 -and [int]$selectedIndex -le $isoFiles.Count))
-
-    $selectedIso = $isoFiles[[int]$selectedIndex - 1]
-
-    Write-Host "`nInstalling WSL Distro using $($selectedIso.Name)..."
-
     # Extract ISO and SquashFS
     $extractDir = Join-Path $Config.ExtractDir $selectedIso.BaseName
     [Directory]::CreateDirectory($extractDir)
 
-    $extractionSteps = @(
-        @{ Source = $selectedIso.FullName; Destination = $extractDir; Name = "ISO" },
-        @{ Source = (Get-ChildItem "$extractDir\casper" -Filter "*.squashfs" -Recurse | Select-Object -First 1).FullName; Destination = $extractDir; Name = "SquashFS" }
-    )
-
-    foreach ($step in $extractionSteps) {
-        $extractArgs = "x `"$($step.Source)`" -o`"$($step.Destination)`" -mmt=$($Config.NumThreads) -aoa"
-        try {
-            $process = Start-Process -Wait -NoNewWindow -PassThru $Config.SevenZipPath -ArgumentList $extractArgs
-            if ($process.ExitCode -ne 0) {
-                throw "$($step.Name) extraction failed with exit code $($process.ExitCode)"
-            }
-        }
-        catch {
-            Write-Log "Error extracting $($step.Name): $_" -Level "ERROR"
-            return
-        }
-    }
-
-    # Compress root filesystem
-    $rootfsTarGz = Join-Path $extractDir "rootfs.tar.gz"
-    $compressArgs = "a -tgzip `"$rootfsTarGz`" `"$extractDir\*`" -xr!rootfs.tar -mmt=$($Config.NumThreads) -aoa"
+    # Extract ISO
+    $extractIsoArgs = "x `"$($selectedIso.FullName)`" -o`"$extractDir`" -mmt=$($Config.NumThreads) -aoa"
     try {
-        Start-Process -Wait -NoNewWindow $Config.SevenZipPath -ArgumentList $compressArgs
+        # Create tar archive in chunks
+        $chunkSize = 1000  # Number of files per chunk
+        $tarFile = Join-Path $tempDir "rootfs.tar"
+        $allFiles = Get-ChildItem $extractDir -Recurse -File
+        $totalFiles = $allFiles.Count
+        $chunks = [Math]::Ceiling($totalFiles / $chunkSize)
+
+        for ($i = 0; $i -lt $chunks; $i++) {
+            $start = $i * $chunkSize
+            $end = [Math]::Min(($i + 1) * $chunkSize, $totalFiles) - 1
+            $currentChunk = $allFiles[$start..$end]
+
+            $chunkList = Join-Path $tempDir "chunk_$i.txt"
+            $currentChunk | ForEach-Object { $_.FullName } | Out-File $chunkList -Encoding utf8
+
+            $tarArgs = "a -ttar `"$tarFile`" @`"$chunkList`" -mmt=$($Config.NumThreads) -aoa"
+            Write-Log "Creating tar chunk $($i+1) of $chunks`: $tarArgs" -Level "INFO"
+            $process = Start-Process -Wait -NoNewWindow -PassThru $Config.SevenZipPath -ArgumentList $tarArgs
+            if ($process.ExitCode -ne 0) {
+                throw "Creating tar chunk $($i+1) failed with exit code $($process.ExitCode)"
+            }
+            Remove-Item $chunkList -Force
+        }
+        Write-Host "Tar archive created successfully."
+
+        # Compress the tar file to gzip
+        $gzipArgs = "a -tgzip `"$rootfsTarGz`" `"$tarFile`" -mmt=$($Config.NumThreads) -aoa"
+        Write-Log "Compressing tar to gzip: $gzipArgs" -Level "INFO"
+        $process = Start-Process -Wait -NoNewWindow -PassThru $Config.SevenZipPath -ArgumentList $gzipArgs
+        if ($process.ExitCode -ne 0) {
+            throw "Compressing tar to gzip failed with exit code $($process.ExitCode)"
+        }
+        Write-Host "Root filesystem compressed successfully."
     }
     catch {
         Write-Log "Error compressing root filesystem: $_" -Level "ERROR"
         return
     }
+    finally {
+        # Clean up temp directory
+        Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Log "Temp directory cleaned up" -Level "INFO"
+    }turn
+    }
+
+    # Compress root filesystem
+    $rootfsTarGz = Join-Path $extractDir "rootfs.tar.gz"
+    $tempDir = Join-Path $env:TEMP "WSLInstall_$(Get-Random)"
+    New-Item -ItemType Directory -Path $tempDir | Out-Null
+    Write-Log "Created temp directory: $tempDir" -Level "INFO"
+
+    try {
+        # Create tar archive in chunks
+        $chunkSize = 1000  # Number of files per chunk
+        $tarFile = Join-Path $tempDir "rootfs.tar"
+        $allFiles = Get-ChildItem $extractDir -Recurse -File
+        $totalFiles = $allFiles.Count
+        $chunks = [Math]::Ceiling($totalFiles / $chunkSize)
+
+        for ($i = 0; $i -lt $chunks; $i++) {
+            $start = $i * $chunkSize
+            $end = [Math]::Min(($i + 1) * $chunkSize, $totalFiles) - 1
+            $currentChunk = $allFiles[$start..$end]
+
+            $chunkList = Join-Path $tempDir "chunk_$i.txt"
+            $currentChunk | ForEach-Object { $_.FullName } | Out-File $chunkList -Encoding utf8
+
+            $tarArgs = "a -ttar `"$tarFile`" @`"$chunkList`" -mmt=$($Config.NumThreads) -aoa"
+            Write-Log "Creating tar chunk $($i+1) of $chunks: $tarArgs" -Level "INFO"
+            $process = Start-Process -Wait -NoNewWindow -PassThru $Config.SevenZipPath -ArgumentList $tarArgs
+            if ($process.ExitCode -ne 0) {
+                throw "Creating tar chunk $($i+1) failed with exit code $($process.ExitCode)"
+            }
+            Remove-Item $chunkList -Force
+        }
+        Write-Host "Tar archive created successfully."
+
+        # Compress the tar file to gzip
+        $gzipArgs = "a -tgzip `"$rootfsTarGz`" `"$tarFile`" -mmt=$($Config.NumThreads) -aoa"
+        Write-Log "Compressing tar to gzip: $gzipArgs" -Level "INFO"
+        $process = Start-Process -Wait -NoNewWindow -PassThru $Config.SevenZipPath -ArgumentList $gzipArgs
+        if ($process.ExitCode -ne 0) {
+            throw "Compressing tar to gzip failed with exit code $($process.ExitCode)"
+        }
+        Write-Host "Root filesystem compressed successfully."
+    }
+    catch {
+        Write-Log "Error compressing root filesystem: $_" -Level "ERROR"
+        return
+    }
+    finally {
+        # Clean up temp directory
+        Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Log "Temp directory cleaned up" -Level "INFO"
+    }
 
     # Import into WSL
-    Wait-WithMessage "`nInstalling WSL2..." 1
+    Write-Host "`nInstalling WSL2..."
     $WSLVersion = (wsl --list --verbose | Select-String "Default Version").ToString().Split(":")[-1].Trim()
     $wslImportArgs = "--import `"$wslDistroName`" `"$extractDir`" `"$rootfsTarGz`" --version $WSLVersion"
     try {
-        wsl $wslImportArgs
-        if ($LASTEXITCODE -ne 0) {
-            throw "WSL import failed with exit code $LASTEXITCODE"
+        Write-Log "Importing WSL distro: $wslImportArgs" -Level "INFO"
+        $process = Start-Process -Wait -NoNewWindow -PassThru "wsl" -ArgumentList $wslImportArgs
+        if ($process.ExitCode -ne 0) {
+            throw "WSL import failed with exit code $($process.ExitCode)"
         }
-        Wait-WithMessage "WSL2 install complete." 1
+        Write-Host "WSL2 install complete."
     }
     catch {
         Write-Log "Error importing WSL distro: $_" -Level "ERROR"
@@ -190,7 +277,8 @@ function Install-UbuntuDistro {
 
     # Cleanup
     Remove-Item $rootfsTarGz, $extractDir -Recurse -Force -ErrorAction SilentlyContinue
-    Write-Host "`nInstallation complete. Use 'wsl -d $wslDistroName'."
+    Write-Log "Cleanup completed" -Level "INFO"
+    Write-Host "`nInstallation complete. Use 'wsl -d $wslDistroName' to start your new distro."
     Read-Host "Press Enter to return to the main menu..."
 }
 

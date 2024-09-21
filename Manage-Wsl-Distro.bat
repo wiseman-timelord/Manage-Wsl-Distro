@@ -39,14 +39,13 @@ timeout /t 1 >nul
 :: DP0 TO SCRIPT BLOCK, DO NOT, MODIFY or MOVE: END
 
 :: EXECUTE_MAIN: START
-echo.
-echo Executing PowerShell-Core Script...
-timeout /t 2 /nobreak >nul
+echo Executing Script...
+timeout /t 1 /nobreak >nul
 @echo on
 pwsh -ExecutionPolicy Bypass -File manage-wsl-distro.ps1
 @echo off
 echo.
-echo Remember to move Completed Files to Intended Destinations!
+echo Note; Move Completed Files to Destinations!
 echo.
 timeout /t 2 /nobreak >nul
 :: EXECUTE_MAIN: END
